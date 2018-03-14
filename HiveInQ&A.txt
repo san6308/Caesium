@@ -1,0 +1,211 @@
+What Are The Different Types Of Tables Available In Hive?
+Answer :
+
+There are two types. Managed table and external table. In managed table both the data an schema in under control of hive but in external table only the schema is under control of Hive.
+
+Is Hive Suitable To Be Used For Oltp Systems? Why?
+Answer :
+
+No Hive does not provide insert and update at row level. So it is not suitable for OLTP system.
+
+Can A Table Be Renamed In Hive?
+Answer :
+
+Alter Table table_name RENAME TO new_name
+
+Can We Change The Data Type Of A Column In A Hive Table?
+Answer :
+
+Using REPLACE column option
+
+ALTER TABLE table_name REPLACE COLUMNS ……
+
+What Is A Metastore In Hive?
+Answer :
+
+It is a relational database storing the metadata of hive tables, partitions, Hive databases etc
+
+What Is The Need For Custom Serde?
+Answer :
+
+Depending on the nature of data the user has, the inbuilt SerDe may not satisfy the format of the data. SO users need to write their own java code to satisfy their data format requirements.
+
+Why Do We Need Hive?
+Answer :
+
+Hive is a tool in Hadoop ecosystem which provides an interface to organize and query data in a databse like fashion and write SQL like queries. It is suitable for accessing and analyzing data in Hadoop using SQL syntax.
+
+What Is The Default Location Where Hive Stores Table Data?
+Answer :
+
+hdfs://namenode_server/user/hive/warehouse
+
+What Are The Three Different Modes In Which Hive Can Be Run?
+Answer :
+
+Local mode
+Distributed mode
+Pseudodistributed mode
+Is There A Date Data Type In Hive?
+Answer :
+
+Yes. The TIMESTAMP data types stores date in java.sql.timestamp format
+
+
+ 
+
+What Are Collection Data Types In Hive?
+Answer :
+
+There are three collection data types in Hive.
+
+ARRAY
+MAP
+STRUCT
+Can We Run Unix Shell Commands From Hive? Give Example?
+Answer :
+
+Yes, using the ! mark just before the command.
+
+For example !pwd at hive prompt will list the current directory.
+
+What Is A Hive Variable? What For We Use It?
+Answer :
+
+The hive variable is variable created in the Hive environment that can be referenced by Hive scripts. It is used to pass some values to the hive queries when the query starts executing.
+
+Can Hive Queries Be Executed From Script Files? How?
+Answer :
+
+Using the source command.
+
+Example: Hive> source /path/to/file/file_with_query.hql
+
+What Is The Importance Of .hiverc File?
+Answer :
+
+It is a file containing list of commands needs to run when the hive CLI starts. For example setting the strict mode to be true etc.
+
+What Are The Default Record And Field Delimiter Used For Hive Text Files?
+Answer :
+
+The default record delimiter is - n
+
+And the filed delimiters are - 01,02,03
+
+What Do You Mean By Schema On Read?
+Answer :
+
+The schema is validated with the data when reading the data and not enforced when writing data.
+
+How Do You List All Databases Whose Name Starts With P?
+Answer :
+
+SHOW DATABASES LIKE ‘p.*’
+
+What Does The “use” Command In Hive Do?
+Answer :
+
+With the use command you fix the database on which all the subsequent hive queries will run.
+
+
+ 
+
+How Can You Delete The Dbproperty In Hive?
+Answer :
+
+There is no way you can delete the DBPROPERTY.
+
+What Is The Significance Of The Line Set Hive.mapred.mode = Strict;
+Answer :
+It sets the mapreduce jobs to strict mode.By which the queries on partitioned tables can not run without a WHERE clause. This prevents very large job running for long time.
+
+How Do You Check If A Particular Partition Exists?
+Answer :
+This can be done with following query
+
+SHOW PARTITIONS table_name PARTITION(partitioned_column=’partition_value’)
+
+Which Java Class Handles The Input Record Encoding Into Files Which Store The Tables In Hive?
+Answer :
+org.apache.hadoop.mapred.TextInputFormat
+
+Which Java Class Handles The Output Record Encoding Into Files Which Result From Hive Queries?
+Answer :
+org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+What Is The Significance Of ‘if Exists” Clause While Dropping A Table?
+Answer :
+When we issue the command DROP TABLE IF EXISTS table_name
+
+Hive throws an error if the table being dropped does not exist in the first place.
+
+When You Point A Partition Of A Hive Table To A New Directory, What Happens To The Data?
+Answer :
+The data stays in the old location. It has to be moved manually.
+
+Write A Query To Insert A New Column(new_col Int) Into A Hiev Table (htab) At A Position Before An Existing Column (x_col)
+Answer :
+ALTER TABLE table_name
+CHANGE COLUMN new_col  INT
+BEFORE x_col
+
+Does The Archiving Of Hive Tables Give Any Space Saving In Hdfs?
+Answer :
+No. It only reduces the number of files which becomes easier for namenode to manage.
+
+How Can You Stop A Partition Form Being Queried?
+Answer :
+By using the ENABLE OFFLINE clause with ALTER TABLE atatement.
+
+While Loading Data Into A Hive Table Using The Load Data Clause, How Do You Specify It Is A Hdfs File And Not A Local File ?
+Answer :
+By Omitting the LOCAL CLAUSE in the LOAD DATA statement.
+
+If You Omit The Overwrite Clause While Creating A Hive Table,what Happens To File Which Are New And Files Which Already Exist?
+Answer :
+The new incoming files are just added to the target directory and the existing files are simply overwritten. Other files whose name does not match any of the incoming files will continue to exist.
+
+If you add the OVERWRITE clause then all the existing data in the directory will be deleted before new data is written.
+
+What Does The Following Query Do? Insert Overwrite Table Employees Partition (country, State) Select ..., Se.cnty, Se.st From Staged_employees Se;
+Answer :
+It creates partition on table employees with partition values coming from the columns in the select clause. It is called Dynamic partition insert.
+
+What Is A Table Generating Function On Hive?
+Answer :
+A table generating function is a function which takes a single column as argument and expands it to multiple column or rows. Example exploe()
+
+How Can Hive Avoid Mapreduce?
+Answer :
+If we set the property hive.exec.mode.local.auto to true then hive will avoid mapreduce to fetch query results.
+
+What Is The Difference Between Like And Rlike Operators In Hive?
+Answer :
+The LIKE operator behaves the same way as the regular SQL operators used in select queries.
+
+Example - street_name like ‘%Chi’
+
+But the RLIKE operator uses more advance regular expressions which are available in java
+
+Example - street_name RLIKE ‘.*(Chi|Oho).*’ which will select any word which has either chi or oho in it.
+
+Is It Possible To Create Cartesian Join Between 2 Tables, Using Hive?
+Answer :
+No. As this kind of Join can not be implemented in mapreduce
+
+As Part Of Optimizing The Queries In Hive, What Should Be The Order Of Table Size In A Join Query?
+Answer :
+In a join query the smallest table to be taken in the first position and largest table should be taken in the last position.
+
+What Is The Usefulness Of The Distributed By Clause In Hive?
+Answer :
+It controls how the map output is reduced among the reducers. It is useful in case of streaming data.
+
+How Will You Convert The String ’51.2’ To A Float Value In The Price Column?
+Answer :
+Select cast(price as FLOAT)
+
+What Will Be The Result When You Do Cast(‘abc’ As Int)?
+Answer :
+Hive will return NULL
